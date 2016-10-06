@@ -1,0 +1,14 @@
+letsencrypt_user: "root"
+letsencrypt_domain: "localhost"
+letsencrypt_image: "haos616/letsencrypt:0.8.1"
+letsencrypt_container_name: "letsencrypt"
+letsencrypt_container_name_renew: "letsencrypt_renew"
+letsencrypt_webroot: "/tmp"
+letsencrypt_data_dir: "/etc/letsencrypt"
+letsencrypt_dhparam_dir: "/etc/ssl/certs"
+letsencrypt_nginx_template: "nginx.conf.j2"
+letsencrypt_nginx_config_file: "/etc/nginx/conf.d/{{ letsencrypt_domain }}.conf"
+
+letsencrypt_dirs:
+  - "{{ letsencrypt_data_dir }}"
+  - "{{ letsencrypt_dhparam_dir }}"

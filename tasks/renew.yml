@@ -1,0 +1,32 @@
+- assert:
+    that:
+     - "letsencrypt_admin_email is defined"
+
+- name: "Run {{ letsencrypt_image }} renew"
+  docker_container:
+    name: "{{ letsencrypt_container_name_renew }}"
+    image: "{{ letsencrypt_image }}"
+    detach: false
+    volumes:
+      - "{{ letsencrypt_data_dir }}:/etc/letsencrypt"
+      - "{{ letsencrypt_webroot }}:/tmp/webroot"
+
+- name: "Add cron task for letsencrypt renew"
+  cron:
+    name: "letsencrypt renew"
+    minute: "30"
+    hour: "2"
+    weekday: "1"
+    cron_file: "letsencrypt"
+    user: "root"
+    job: "docker start {{ letsencrypt_container_name_renew }} > /dev/null"
+
+- name: "Add cron task for restart nginx"
+  cron:
+    name: "restart nginx"
+    minute: "35"
+    hour: "2"
+    weekday: "1"
+    cron_file: "nginx"
+    user: "root"
+    job: "service nginx restart > /dev/null"
