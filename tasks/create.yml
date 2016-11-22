@@ -34,5 +34,5 @@
   register: dhparam
 
 - name: Create dhparam
-  shell: "openssl dhparam -out {{ letsencrypt_dhparam_dir }}/dhparam.pem 2048"
+  shell: "openssl dhparam -out {{ letsencrypt_dhparam_file }} 2048"
   when: dhparam.stat.exists == false

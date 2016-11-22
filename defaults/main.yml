@@ -6,6 +6,7 @@ letsencrypt_container_name_renew: "letsencrypt_renew"
 letsencrypt_webroot: "/tmp"
 letsencrypt_data_dir: "/etc/letsencrypt"
 letsencrypt_dhparam_dir: "/etc/ssl/certs"
+letsencrypt_dhparam_file: "{{ letsencrypt_dhparam_dir }}/dhparam.pem"
 letsencrypt_nginx_template: "nginx.conf.j2"
 letsencrypt_nginx_config_file: "/etc/nginx/conf.d/{{ letsencrypt_domain }}.conf"
 
