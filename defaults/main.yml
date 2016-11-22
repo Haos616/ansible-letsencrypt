@@ -1,6 +1,6 @@
 letsencrypt_user: "root"
 letsencrypt_domain: "localhost"
-letsencrypt_image: "haos616/letsencrypt:0.8.1"
+letsencrypt_image: "haos616/letsencrypt:0.9.3"
 letsencrypt_container_name: "letsencrypt"
 letsencrypt_container_name_renew: "letsencrypt_renew"
 letsencrypt_webroot: "/tmp"
