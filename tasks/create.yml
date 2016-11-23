@@ -1,6 +1,7 @@
 - assert:
     that:
      - "letsencrypt_admin_email is defined"
+     - "letsencrypt_domain is defined"
 
 - name: Creates directories
   file: path="{{ item }}" owner="{{ letsencrypt_user }}" group="{{ letsencrypt_user }}" state=directory
@@ -30,7 +31,7 @@
 - name: Install libssl
   apt: name="libssl1.0.0"
 
-- stat: path="{{ letsencrypt_dhparam_dir }}/dhparam.pem"
+- stat: path="{{ letsencrypt_dhparam_file }}"
   register: dhparam
 
 - name: Create dhparam
