@@ -1,7 +1,3 @@
-- assert:
-    that:
-     - "letsencrypt_admin_email is defined"
-
 - name: "Run {{ letsencrypt_image }} renew"
   docker_container:
     name: "{{ letsencrypt_container_name_renew }}"
