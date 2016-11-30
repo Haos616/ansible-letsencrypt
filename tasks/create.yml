@@ -7,12 +7,6 @@
   file: path="{{ item }}" owner="{{ letsencrypt_user }}" group="{{ letsencrypt_user }}" state=directory
   with_items: "{{ letsencrypt_dirs }}"
 
-- name: Generate {{ letsencrypt_domain }} nginx conf
-  template: src="{{ letsencrypt_nginx_template }}" dest={{ letsencrypt_nginx_config_file }}
-
-- name: Restart nginx
-  service: name=nginx state=restarted
-
 - name: "Run {{ letsencrypt_image }}"
   docker_container:
     name: "{{ letsencrypt_container_name }}"
