@@ -20,7 +20,7 @@ ansible-galaxy install -p roles/ -r requirements.yml
 ```
 # Old certs
 haproxy_certs: []
-haproxy_config_template: "{{ playbook_dir }}/roles/letsencrypt/tenplates/haproxy.cfg.j2"
+haproxy_config_template: "{{ playbook_dir }}/roles/letsencrypt/templates/haproxy.cfg.j2"
 
 letsencrypt_admin_email: "admin@example.com"
 
