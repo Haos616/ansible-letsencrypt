@@ -1,20 +1,14 @@
-letsencrypt_user: "root"
-letsencrypt_image: "haos616/letsencrypt:0.9.3"
-letsencrypt_container_name: "letsencrypt"
-letsencrypt_container_name_renew: "letsencrypt_renew"
-letsencrypt_webroot: "/tmp/webroot"
+cache_valid_time: 3600
+
+letsencrypt_user: "letsencrypt"
+letsencrypt_version: "0.10.1"
+letsencrypt_certs: []
+letsencrypt_ip: "127.0.0.1"
+letsencrypt_port: "5555"
 letsencrypt_data_dir: "/etc/letsencrypt"
-letsencrypt_dhparam_dir: "/etc/ssl/certs"
-letsencrypt_dhparam_file: "{{ letsencrypt_dhparam_dir }}/dhparam.pem"
-letsencrypt_nginx_template: "nginx.conf.j2"
-letsencrypt_nginx_conf_dir: "/etc/nginx/conf.d"
-letsencrypt_nginx_config_file: "{{ letsencrypt_nginx_conf_dir }}/{{ letsencrypt_domain }}.conf"
+letsencrypt_haproxy_cert_template: "haproxy.pem.j2"
+letsencrypt_haproxy_cert_dir: "/etc/ssl/certs"
+letsencrypt_domain: "{{ item.domains.0 }}"
+
 letsencrypt_ssl_certificate: "{{ letsencrypt_data_dir }}/live/{{ letsencrypt_domain }}/fullchain.pem"
 letsencrypt_ssl_certificate_key: "{{ letsencrypt_data_dir }}/live/{{ letsencrypt_domain }}/privkey.pem"
-letsencrypt_app_port: "8001"
-letsencrypt_api_ip: "127.0.0.1"
-
-letsencrypt_dirs:
-  - "{{ letsencrypt_data_dir }}"
-  - "{{ letsencrypt_dhparam_dir }}"
-  - "{{ letsencrypt_webroot }}"

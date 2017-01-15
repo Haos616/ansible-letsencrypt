@@ -1,33 +1,8 @@
 - assert:
     that:
      - "letsencrypt_admin_email is defined"
-     - "letsencrypt_domain is defined"
+     - "letsencrypt_certs is defined"
 
-- name: Creates directories
-  file: path="{{ item }}" owner="{{ letsencrypt_user }}" group="{{ letsencrypt_user }}" state=directory
-  with_items: "{{ letsencrypt_dirs }}"
-
-- name: "Run {{ letsencrypt_image }}"
-  docker_container:
-    name: "{{ letsencrypt_container_name }}"
-    image: "{{ letsencrypt_image }}"
-    command: "/usr/local/bin/certbot certonly --webroot -w /tmp/webroot -d {{ letsencrypt_domain }} --agree-tos --email {{ letsencrypt_admin_email }} -n "
-    detach: false
-    volumes:
-      - "{{ letsencrypt_data_dir }}:/etc/letsencrypt"
-      - "{{ letsencrypt_webroot }}:/tmp/webroot"
-
-- name: Remove container {{ letsencrypt_container_name }}
-  docker_container:
-    name: "{{ letsencrypt_container_name }}"
-    state: absent
-
-- name: Install libssl
-  apt: name="libssl1.0.0"
-
-- stat: path="{{ letsencrypt_dhparam_file }}"
-  register: dhparam
-
-- name: Create dhparam
-  shell: "openssl dhparam -out {{ letsencrypt_dhparam_file }} 2048"
-  when: dhparam.stat.exists == false
+- name: Create letsencrypt certs
+  shell: "certbot certonly -n --standalone{% for domain in item.domains %} -d {{ domain }}{% endfor %} --text --agree-tos --email {{ letsencrypt_admin_email }} --post-hook='cat {{ letsencrypt_ssl_certificate }} {{ letsencrypt_ssl_certificate_key }} > {{ letsencrypt_haproxy_cert_dir }}/{{ letsencrypt_domain }}.pem' --server https://acme-v01.api.letsencrypt.org/directory --rsa-key-size 4096 --verbose --keep-until-expiring --standalone-supported-challenges http-01 --http-01-port {{ letsencrypt_port }}"
+  with_items: "{{ letsencrypt_certs }}"

@@ -1,3 +1,0 @@
-- name: Creates directories
-  file: path="{{ item }}" owner="{{ letsencrypt_user }}" group="{{ letsencrypt_user }}" state=directory
-  with_items: "{{ letsencrypt_dirs }}"
