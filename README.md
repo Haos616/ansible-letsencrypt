@@ -7,7 +7,7 @@
 ```
 # Alternative src https://github.com/haos616/ansible-haproxy
 - src: haos616.haproxy
-  version: "0.1.2"
+  version: "0.1.3"
   name: "haproxy"
 ```
 
